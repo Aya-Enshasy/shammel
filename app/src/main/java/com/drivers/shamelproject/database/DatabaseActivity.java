@@ -57,6 +57,28 @@ public class DatabaseActivity extends AppCompatActivity {
             }
         });
 
+        binding.getStudentCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                long count =  myDatabase.getStudentCount();
+                    Toast.makeText(DatabaseActivity.this, count+"", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.deleteFromDatabase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean res = myDatabase.deleteAll();
+                if (res){
+                    Toast.makeText(DatabaseActivity.this, "deleted successfully", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(DatabaseActivity.this, "error", Toast.LENGTH_SHORT).show();
+                }
+                adapter.notifyDataSetChanged();
+
+            }
+        });
+
 
         LinearLayoutManager layoutManager=new LinearLayoutManager(this, RecyclerView.VERTICAL,false);
         binding.recyclerview.setLayoutManager(layoutManager);
@@ -64,4 +86,5 @@ public class DatabaseActivity extends AppCompatActivity {
         binding.recyclerview.setAdapter(adapter);
 
     }
+
 }

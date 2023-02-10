@@ -1,8 +1,10 @@
 package com.drivers.shamelproject.database;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -47,9 +49,9 @@ public class MyDatabase extends SQLiteOpenHelper {
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                int id = cursor.getInt(cursor.getColumnIndex("id"));
-                String name = cursor.getString(cursor.getColumnIndex("name"));
-                String age = cursor.getString(cursor.getColumnIndex("age"));
+                @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex("id"));
+                @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex("name"));
+                @SuppressLint("Range") String age = cursor.getString(cursor.getColumnIndex("age"));
 
                 Student student = new Student(id, name, age);
                 list.add(student);
@@ -60,5 +62,66 @@ public class MyDatabase extends SQLiteOpenHelper {
 
         return list;
     }
+
+    public boolean deleteAll(){
+        SQLiteDatabase database = getWritableDatabase();
+        //لو بدي احذف كل العناصر
+        int result = database.delete( MyDatabase.DB_NAME , "1" ,  null);
+        return result > 0;
+
+    }
+
+    public boolean deleteItem(Student student){
+        SQLiteDatabase database = getWritableDatabase();
+        //لو بدي احذف بناء على اي دي العنصر يعني ما احذف كل العناصر
+        String arg [] = {String.valueOf(student.getId())};
+        int result = database.delete( MyDatabase.DB_NAME , "id=?" ,  arg);
+        return result > 0;
+
+    }
+
+    //لارجاع عدد الصفوف في الجدول
+    public long getStudentCount(){
+        SQLiteDatabase database = getReadableDatabase();
+        return DatabaseUtils.queryNumEntries(database,DB_NAME);
+
+    }
+
+    // name search method
+    public ArrayList<Student> getStudent(String nameSearch) {
+        ArrayList<Student> posts = new ArrayList<>();
+        SQLiteDatabase database = getReadableDatabase();
+
+        Cursor cursor = database.rawQuery("SELECT * FROM " + MyDatabase.DB_NAME + " WHERE " + "name" + " LIKE ?", new String[]{"%" + nameSearch + "%"
+        });
+
+        // to know if cursor contains data or not :
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                @SuppressLint("Range")  int id = cursor.getInt(cursor.getColumnIndex("id"));
+                @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex("name"));
+                @SuppressLint("Range") String age = cursor.getString(cursor.getColumnIndex("age"));
+
+                Student student = new Student(id, name, age);
+                posts.add(student);
+            }
+            while (cursor.moveToNext());
+            cursor.close();
+        }
+
+        return posts;
+    }
+
+
+    public boolean update(Student student){
+        SQLiteDatabase database = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("name",student.getName());
+        values.put("age",student.getAge());
+        String arg [] = {String.valueOf(student.getId())};
+        int result = database.update( MyDatabase.DB_NAME,values , "id=?" ,  arg);
+        return result>0;
+    }
+    //اعمل انترفيس بالادابتر واجيب اي دي واحدث او احذف بناء عليه
 
 }
