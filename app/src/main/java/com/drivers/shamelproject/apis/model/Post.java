@@ -17,6 +17,11 @@ public class Post implements Serializable {
     @SerializedName("body")
     private String body;
 
+    public Post(int id, String title) {
+        this.id = id;
+        this.title = title;
+    }
+
     public int getUserId() {
         return userId;
     }

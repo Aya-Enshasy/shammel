@@ -11,6 +11,7 @@ import com.drivers.shamelproject.databinding.ActivitySharedPreferanceBinding;
 public class SharedPreferences extends AppCompatActivity {
 
     ActivitySharedPreferanceBinding binding;
+    //////////
     public static final String PREF_NAME = "RegisterPreferences";
     public static android.content.SharedPreferences sp;
     public static android.content.SharedPreferences.Editor editor;

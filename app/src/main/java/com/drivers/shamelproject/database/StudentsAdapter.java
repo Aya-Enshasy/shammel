@@ -37,8 +37,8 @@ public class StudentsAdapter extends RecyclerView.Adapter<StudentsAdapter.viewHo
     @Override
     public void onBindViewHolder(@NonNull StudentsAdapter.viewHolder holder, int position) {
 
-        holder.binding.nameFromDatabase.setText(list.get(position).getName());
-        holder.binding.ageFromDatabase.setText(list.get(position).getAge());
+//        holder.binding.nameFromDatabase.setText(list.get(position).getName());
+//        holder.binding.ageFromDatabase.setText(list.get(position).getAge());
     }
 
     @Override

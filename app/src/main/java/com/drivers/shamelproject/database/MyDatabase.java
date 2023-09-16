@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.drivers.shamelproject.apis.model.Post;
+
 import java.util.ArrayList;
 
 public class MyDatabase extends SQLiteOpenHelper {
@@ -33,11 +35,21 @@ public class MyDatabase extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    //اضافة بالداتا بيز
     public boolean insert(Student student){
         SQLiteDatabase database = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("name",student.getName());
         values.put("age",student.getAge());
+        long result = database.insert(DB_NAME,null,values);
+        return result != -1;
+    }
+    //اضافة بالداتا بيز
+    public boolean insertPost(Post student){
+        SQLiteDatabase database = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("title",student.getTitle());
+
         long result = database.insert(DB_NAME,null,values);
         return result != -1;
     }
@@ -54,6 +66,26 @@ public class MyDatabase extends SQLiteOpenHelper {
                 @SuppressLint("Range") String age = cursor.getString(cursor.getColumnIndex("age"));
 
                 Student student = new Student(id, name, age);
+                list.add(student);
+
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+
+        return list;
+    }
+
+    public ArrayList<Post> getAllPosts() {
+        ArrayList<Post> list = new ArrayList<>();
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM " + MyDatabase.DB_NAME, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex("id"));
+                @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex("title"));
+
+                Post student = new Post(id, name);
                 list.add(student);
 
             } while (cursor.moveToNext());
