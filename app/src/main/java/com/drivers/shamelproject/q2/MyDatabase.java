@@ -1,4 +1,4 @@
-package com.drivers.shamelproject.database;
+package com.drivers.shamelproject.q2;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import com.drivers.shamelproject.apis.model.Post;
+import com.drivers.shamelproject.database.Student;
 
 import java.util.ArrayList;
 
@@ -36,23 +37,17 @@ public class MyDatabase extends SQLiteOpenHelper {
     }
 
     //اضافة بالداتا بيز
-    public boolean insert(Student student){
+    public boolean insert(Photos photos){
         SQLiteDatabase database = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("name",student.getName());
-        values.put("age",student.getAge());
+        values.put("title",photos.getTitle());
+        values.put("url",photos.getUrl());
+        values.put("thumbnailUrl",photos.getThumbnailUrl());
+        values.put("albumId",photos.getAlbumId());
         long result = database.insert(DB_NAME,null,values);
         return result != -1;
     }
-    //اضافة بالداتا بيز
-    public boolean insertPost(Post student){
-        SQLiteDatabase database = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("title",student.getTitle());
 
-        long result = database.insert(DB_NAME,null,values);
-        return result != -1;
-    }
 
     public ArrayList<Student> getAllStudents() {
         ArrayList<Student> list = new ArrayList<>();

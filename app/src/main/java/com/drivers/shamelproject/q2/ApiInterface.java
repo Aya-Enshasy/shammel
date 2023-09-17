@@ -1,4 +1,4 @@
-package com.drivers.shamelproject.apis;
+package com.drivers.shamelproject.q2;
 
 import com.drivers.shamelproject.apis.model.Post;
 
@@ -8,6 +8,6 @@ import retrofit2.http.GET;
 
 public interface ApiInterface {
 
-    @GET("posts")
-    Call<List<Post>> getPosts();
+    @GET("photos")
+    Call<List<Photos>> getPhotos();
 }
