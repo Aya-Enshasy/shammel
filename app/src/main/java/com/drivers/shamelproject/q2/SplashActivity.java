@@ -8,12 +8,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.drivers.shamelproject.ImageActivity;
 import com.drivers.shamelproject.R;
-import com.drivers.shamelproject.apis.model.Post;
-import com.drivers.shamelproject.database.DatabaseActivity;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;

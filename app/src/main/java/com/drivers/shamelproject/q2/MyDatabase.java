@@ -10,8 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-import com.drivers.shamelproject.apis.model.Post;
-import com.drivers.shamelproject.database.Student;
+ import com.drivers.shamelproject.database.Student;
 
 import java.util.ArrayList;
 
@@ -49,19 +48,21 @@ public class MyDatabase extends SQLiteOpenHelper {
     }
 
 
-    public ArrayList<Student> getAllStudents() {
-        ArrayList<Student> list = new ArrayList<>();
+    public ArrayList<Photos> getAllPhotos() {
+        ArrayList<Photos> list = new ArrayList<>();
         SQLiteDatabase database = getReadableDatabase();
         Cursor cursor = database.rawQuery("SELECT * FROM " + MyDatabase.DB_NAME, null);
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex("id"));
-                @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex("name"));
-                @SuppressLint("Range") String age = cursor.getString(cursor.getColumnIndex("age"));
+                @SuppressLint("Range") String title = cursor.getString(cursor.getColumnIndex("title"));
+                @SuppressLint("Range") String url = cursor.getString(cursor.getColumnIndex("url"));
+                @SuppressLint("Range") String thumbnailUrl = cursor.getString(cursor.getColumnIndex("thumbnailUrl"));
+                @SuppressLint("Range") String albumId = cursor.getString(cursor.getColumnIndex("albumId"));
 
-                Student student = new Student(id, name, age);
-                list.add(student);
+                Photos photos = new Photos(albumId, title, url,thumbnailUrl);
+                list.add(photos);
 
             } while (cursor.moveToNext());
             cursor.close();
@@ -70,38 +71,13 @@ public class MyDatabase extends SQLiteOpenHelper {
         return list;
     }
 
-    public ArrayList<Post> getAllPosts() {
-        ArrayList<Post> list = new ArrayList<>();
-        SQLiteDatabase database = getReadableDatabase();
-        Cursor cursor = database.rawQuery("SELECT * FROM " + MyDatabase.DB_NAME, null);
 
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex("id"));
-                @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex("title"));
 
-                Post student = new Post(id, name);
-                list.add(student);
 
-            } while (cursor.moveToNext());
-            cursor.close();
-        }
-
-        return list;
-    }
-
-    public boolean deleteAll(){
-        SQLiteDatabase database = getWritableDatabase();
-        //لو بدي احذف كل العناصر
-        int result = database.delete( MyDatabase.DB_NAME , "1" ,  null);
-        return result > 0;
-
-    }
-
-    public boolean deleteItem(Student student){
+    public boolean deleteItem(Photos photos){
         SQLiteDatabase database = getWritableDatabase();
         //لو بدي احذف بناء على اي دي العنصر يعني ما احذف كل العناصر
-        String arg [] = {String.valueOf(student.getId())};
+        String arg [] = {String.valueOf(photos.getId())};
         int result = database.delete( MyDatabase.DB_NAME , "id=?" ,  arg);
         return result > 0;
 
@@ -113,42 +89,5 @@ public class MyDatabase extends SQLiteOpenHelper {
         return DatabaseUtils.queryNumEntries(database,DB_NAME);
 
     }
-
-    // name search method
-    public ArrayList<Student> getStudent(String nameSearch) {
-        ArrayList<Student> posts = new ArrayList<>();
-        SQLiteDatabase database = getReadableDatabase();
-
-        Cursor cursor = database.rawQuery("SELECT * FROM " + MyDatabase.DB_NAME + " WHERE " + "name" + " LIKE ?", new String[]{"%" + nameSearch + "%"
-        });
-
-        // to know if cursor contains data or not :
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                @SuppressLint("Range")  int id = cursor.getInt(cursor.getColumnIndex("id"));
-                @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex("name"));
-                @SuppressLint("Range") String age = cursor.getString(cursor.getColumnIndex("age"));
-
-                Student student = new Student(id, name, age);
-                posts.add(student);
-            }
-            while (cursor.moveToNext());
-            cursor.close();
-        }
-
-        return posts;
-    }
-
-
-    public boolean update(Student student){
-        SQLiteDatabase database = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("name",student.getName());
-        values.put("age",student.getAge());
-        String arg [] = {String.valueOf(student.getId())};
-        int result = database.update( MyDatabase.DB_NAME,values , "id=?" ,  arg);
-        return result>0;
-    }
-    //اعمل انترفيس بالادابتر واجيب اي دي واحدث او احذف بناء عليه
 
 }

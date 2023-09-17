@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class Photos implements Serializable {
     @SerializedName("albumId")
-    private int albumId;
+    private String albumId;
 
     @SerializedName("id")
     private int id;
@@ -20,18 +20,18 @@ public class Photos implements Serializable {
     @SerializedName("thumbnailUrl")
     private String thumbnailUrl;
 
-    public Photos(int albumId ,String title, String url, String thumbnailUrl) {
+    public Photos(String albumId ,String title, String url, String thumbnailUrl) {
         this.albumId = albumId;
         this.title = title;
         this.url = url;
         this.thumbnailUrl = thumbnailUrl;
     }
 
-    public int getAlbumId() {
+    public String getAlbumId() {
         return albumId;
     }
 
-    public void setAlbumId(int albumId) {
+    public void setAlbumId(String albumId) {
         this.albumId = albumId;
     }
 

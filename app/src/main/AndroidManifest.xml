@@ -14,7 +14,7 @@
         android:theme="@style/Theme.ShamelProject"
         tools:targetApi="31">
         <activity
-            android:name=".ImageActivity"
+            android:name=".q2.ImageActivity"
             android:exported="false" />
         <activity
             android:name=".q3.ProductActivity"
@@ -24,12 +24,6 @@
             android:exported="false" />
         <activity
             android:name=".recycel.MainActivity2"
-            android:exported="false" />
-        <activity
-            android:name=".q2.ApisActivity"
-            android:exported="false" />
-        <activity
-            android:name=".database.DatabaseActivity"
             android:exported="false" />
         <activity
             android:name=".SharedPreferences.SharedPreferences"

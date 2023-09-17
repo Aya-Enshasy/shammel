@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.drivers.shamelproject.database.DatabaseActivity;
 import com.drivers.shamelproject.databinding.ActivityMainBinding;
 import com.drivers.shamelproject.SharedPreferences.SharedPreferences;
 

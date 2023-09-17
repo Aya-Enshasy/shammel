@@ -1,6 +1,5 @@
 package com.drivers.shamelproject.q2;
 
-import com.drivers.shamelproject.apis.model.Post;
 
 import java.util.List;
 import retrofit2.Call;
